@@ -5,7 +5,7 @@ import { Image } from 'react-bootstrap';
 import '../assets/css/GameUI.scss';
 
 export default function GameUI(props) {    
-    const { getImages } = useContext(gamerContext);
+    const { getImages, cate, challenge } = useContext(gamerContext);
     const [imagesList, setImagesList] = useState(null);
     const [imagesUI, setImagesUI] = useState(null);
     const cardsRef = useRef([]);
@@ -20,27 +20,42 @@ export default function GameUI(props) {
         }
     }
 
+    function getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) ) + min;
+    }
+
+    // Image List Change
     useEffect(() => {
-        if (imagesList) {
+        if (imagesList != null) {
+
+            let ranPick = getRndInteger(0, imagesList.length-1);
+            //console.log('ranPick', ranPick);
+
+            // Random add
+            let ranAdd = getRndInteger(0, challenge);
+            //console.log('ranAdd', ranAdd);
+
+            let newImgList = [...imagesList];
+            newImgList.splice(ranAdd, 0, imagesList[ranPick]);
+            //console.log('new', newImgList);
+
             // Generate images into cards
-            var cards;
-            cards = imagesList.map( (img, index) => {
+            var cards;            
+            cards = newImgList.map( (img, index) => {
                 return <div id={`card-${img.id}`}
                             className='flip-card'
                             onClick={(event, id) => handleClickCards(event, img.id, index) }
                             ref={ref => { cardsRef.current[index] = ref}}>
                             <div className="flip-card-inner">
-                                <div className="flip-card-front">
-                                    <p>hi</p>
-                                </div>
+                                <div className="flip-card-front"></div>
                                 <div className="flip-card-back" style={{ backgroundImage: `url('${img.urls.small}')` }}>                  
                                 </div>
                             </div>
                         </div>
             });
-
+            // Output in table
             let rows = 3;
-            let cols = Math.floor(imagesList.length / rows);
+            let cols = Math.floor(newImgList.length / rows);
             let index = 0;
             let tr = [];
             for (var i = 0; i < rows; i++) {
@@ -53,19 +68,25 @@ export default function GameUI(props) {
             }
             setImagesUI(tr);
         }
-    }, [imagesList])
+    }, [imagesList]);
 
+    // Cate, Challenge Change
     useEffect(() => {
-        const qs = `query=thailand&orientation=landscape&count=6`;
+        console.log(cate, challenge);
+
+    }, [cate, challenge])
+
+    // First time loader
+    useEffect(() => {
         const responseFun = (response) => {
-            setImagesList(response);
-            //setImagesList(response.data);
+            //setImagesList(response);
+            setImagesList(response.data);
         }
         const errorFunc = (respone) => {
             console.log(respone);
         }
-        getImages(qs, responseFun, errorFunc);
-    }, [])
+        getImages(responseFun, errorFunc);
+    }, []);
 
     return (     
         <table className="GameUITable">
