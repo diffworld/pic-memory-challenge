@@ -4,25 +4,68 @@ import { Image } from 'react-bootstrap';
 
 import '../assets/css/GameUI.scss';
 
-export default function GameUI(props) {    
-    const { getImages, cate, challenge } = useContext(gamerContext);
+export default function GameUI() {    
+    
+    const { getImages, cate, challenge, score, setScore } = useContext(gamerContext);
+
     const [imagesList, setImagesList] = useState(null);
+    const [addedImagesList, setAddedImagesList] = useState(null);
+
     const [imagesUI, setImagesUI] = useState(null);
     const cardsRef = useRef([]);
 
-    const handleClickCards = (event, id, index) => {
-        let classes = cardsRef.current[index].className.split(' ');
-        const classExisted = (cl) => cl === 'opened';
-        if ( classes.findIndex( classExisted ) == -1 ) {
-            cardsRef.current[index].className = 'flip-card opened';
-        } else {
-            cardsRef.current[index].className = 'flip-card';
-        }
+    const opened1Ref = useRef('');
+    const opened2Ref = useRef('');
+
+    // Open a card
+    const openCard = ( index ) => {
+        cardsRef.current[index].className = 'flip-card opened';
     }
 
     function getRndInteger(min, max) {
         return Math.floor(Math.random() * (max - min + 1) ) + min;
     }
+
+    const handleClickCards = (event, id, index) => {
+        if (opened1Ref.current === '') {
+            openCard(index);
+            opened1Ref.current = index;
+        } else {
+            if (opened2Ref.current === '' ) {
+                openCard(index);
+                opened2Ref.current = index;
+                validateCards();
+            }
+        }
+    }
+
+    const validateCards = () => {
+        let card1Id = cardsRef.current[opened1Ref.current].id;
+        let card2Id = cardsRef.current[opened2Ref.current].id;
+
+        if (card1Id === card2Id) {
+            alert('win!');
+            let newScrore = parseInt(score);
+            setScore(newScrore + 1);
+        } else {
+            opened1Ref.current = '';
+            opened2Ref.current = '';
+            closeAllCard();
+        }
+    }
+
+    const closeAllCard = () => {
+        setTimeout(() => {
+            for (let i = 0; i < challenge; i++) {
+                cardsRef.current[i].className = 'flip-card';
+            }
+        }, 1000);
+    }
+
+    // When one or two of cards is opened
+    useEffect(() => {
+        
+    }, [opened1Ref.current, opened1Ref.current]);
 
     // Image List Change
     useEffect(() => {
@@ -37,6 +80,7 @@ export default function GameUI(props) {
 
             let newImgList = [...imagesList];
             newImgList.splice(ranAdd, 0, imagesList[ranPick]);
+            setAddedImagesList(newImgList);
             //console.log('new', newImgList);
 
             // Generate images into cards
@@ -44,7 +88,7 @@ export default function GameUI(props) {
             cards = newImgList.map( (img, index) => {
                 return <div id={`card-${img.id}`}
                             className='flip-card'
-                            onClick={(event, id) => handleClickCards(event, img.id, index) }
+                            onClick={(event, id, cardIndex) => handleClickCards(event, img.id, index) }
                             ref={ref => { cardsRef.current[index] = ref}}>
                             <div className="flip-card-inner">
                                 <div className="flip-card-front"></div>
@@ -65,7 +109,7 @@ export default function GameUI(props) {
                     index++;
                 }
                 tr.push(<tr key={i}>{td}</tr>);
-            }
+            }            
             setImagesUI(tr);
         }
     }, [imagesList]);
@@ -79,8 +123,8 @@ export default function GameUI(props) {
     // First time loader
     useEffect(() => {
         const responseFun = (response) => {
-            //setImagesList(response);
-            setImagesList(response.data);
+            setImagesList(response);
+            //setImagesList(response.data);
         }
         const errorFunc = (respone) => {
             console.log(respone);

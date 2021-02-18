@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Form } from 'react-bootstrap';
+import { Form , Button} from 'react-bootstrap';
 import { gamerContext } from '../context/Gamer';
 
 export default function Options(props) {
@@ -32,6 +32,7 @@ export default function Options(props) {
                         <option value="lama">Lama</option>
                     </Form.Control>
                 </Form.Group>
+                <Button size="lg">Reset</Button>            
             </Form>
         </div>
     )
