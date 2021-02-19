@@ -6,7 +6,7 @@ export default function Options(props) {
 
     const { challenge, setChallenge, 
             cate, setCate, 
-            isReset, setIsReset } = useContext(gamerContext);
+            gameNum, setGameNum } = useContext(gamerContext);
     
     const handleChallengeChanged = (e) => {
         setChallenge(e.target.value);
@@ -15,8 +15,8 @@ export default function Options(props) {
         setCate(e.target.value);
     }
     const handleResetClick = () => {
-        let newIsReset = !isReset;
-        setIsReset(newIsReset);
+        let curGameNum = parseInt(gameNum);
+        setGameNum(curGameNum+1);
     }
 
     return (

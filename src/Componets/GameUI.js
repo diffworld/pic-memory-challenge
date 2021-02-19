@@ -19,7 +19,7 @@ export default function GameUI() {
     const opened1Ref = useRef('');
     const opened2Ref = useRef('');
 
-    const [curGameNum, setCurGameNum] = useState(0);
+    const [curGameNum, setCurGameNum] = useState(1);
 
     // Open a card
     const openCard = ( index ) => {
@@ -47,10 +47,11 @@ export default function GameUI() {
         let card1Id = cardsRef.current[opened1Ref.current].id;
         let card2Id = cardsRef.current[opened2Ref.current].id;
 
-        if (card1Id === card2Id) {
-            alert('win!');
+        if (card1Id === card2Id) { // WIN
             let newScrore = parseInt(score);
             setScore(newScrore + 1);
+            resetGame();
+            alert('WIN');
         } else {
             opened1Ref.current = '';
             opened2Ref.current = '';
@@ -59,14 +60,47 @@ export default function GameUI() {
     }
 
     const closeAllCard = () => {
-        for (let i = 0; i < challenge; i++) {
-            cardsRef.current[i].className = 'flip-card';
-        }
+        return new Promise ( (resolve, reject) => {
+            for (let i = 0; i < challenge; i++) {
+                cardsRef.current[i].className = 'flip-card';
+            }
+            resolve();
+        });
     }
 
-    // When one or two of cards is opened
-    useEffect(() => {        
-    }, [opened1Ref.current, opened1Ref.current]);
+    const loadImages = () => {
+        return new Promise ( (resolve, reject) => {
+            const responseFun = (response) => {
+                setImagesList(response);
+                //setImagesList(response.data);
+            }
+            const errorFunc = (respone) => {
+                console.log(respone);
+            }
+            getImages(responseFun, errorFunc);
+            resolve(true);
+        });
+    }
+
+    async function resetGame() { 
+        await closeAllCard();  // Close all card
+        
+        await new Promise ( (resolve, reject) => { // Remove var
+            opened1Ref.current = opened2Ref.current = '';
+            cardsRef.current = [];
+            setImagesList(null);
+            setAddedImagesList(null)
+            setImagesUI(null);
+            resolve();
+        });
+
+        // Load new images
+        await loadImages();
+
+        let g = parseInt(curGameNum); // Update Game Num
+        setCurGameNum(g+1);
+        setGameNum(g+1);
+    };
 
     // Image List Change
     useEffect(() => {
@@ -117,35 +151,22 @@ export default function GameUI() {
 
     // Cate, Challenge Change
     useEffect(() => {
-        console.log(cate, challenge);
+        console.log('cate', cate, challenge);
 
     }, [cate, challenge])
 
     // First time loader
     useEffect(() => {
-        const responseFun = (response) => {
-            setImagesList(response);
-            //setImagesList(response.data);
-        }
-        const errorFunc = (respone) => {
-            console.log(respone);
-        }
-        getImages(responseFun, errorFunc);
+        loadImages();
     }, []);
 
-    // Is reset chane
-    // useEffect(() => {
-    //     if (gameNum != curGameNum) {
-    //         let p = new Promise(function(resolve, reject) {
-    //             closeAllCard();
-    //             resolve(true);   
-    //         });
-    //         p.then(function() {
-    //                 opened1Ref.current = opened1Ref.current = '';
-    //                 cardsRef.current = [];
-    //         });
-    //     }
-    // }, [gameNum, curGameNum])
+    // Reset change
+    useEffect(() => {
+        console.log('game num', gameNum, curGameNum);
+        if (gameNum > curGameNum) { // Game reseted
+            resetGame();
+        }
+    }, [gameNum, curGameNum])
 
     return (     
         <table className="GameUITable">
