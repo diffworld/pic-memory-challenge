@@ -6,7 +6,9 @@ import '../assets/css/GameUI.scss';
 
 export default function GameUI() {    
     
-    const { getImages, cate, challenge, score, setScore } = useContext(gamerContext);
+    const { getImages, cate, challenge,
+            score, setScore,
+            gameNum, setGameNum } = useContext(gamerContext);
 
     const [imagesList, setImagesList] = useState(null);
     const [addedImagesList, setAddedImagesList] = useState(null);
@@ -16,6 +18,8 @@ export default function GameUI() {
 
     const opened1Ref = useRef('');
     const opened2Ref = useRef('');
+
+    const [curGameNum, setCurGameNum] = useState(0);
 
     // Open a card
     const openCard = ( index ) => {
@@ -55,16 +59,13 @@ export default function GameUI() {
     }
 
     const closeAllCard = () => {
-        setTimeout(() => {
-            for (let i = 0; i < challenge; i++) {
-                cardsRef.current[i].className = 'flip-card';
-            }
-        }, 1000);
+        for (let i = 0; i < challenge; i++) {
+            cardsRef.current[i].className = 'flip-card';
+        }
     }
 
     // When one or two of cards is opened
-    useEffect(() => {
-        
+    useEffect(() => {        
     }, [opened1Ref.current, opened1Ref.current]);
 
     // Image List Change
@@ -131,6 +132,20 @@ export default function GameUI() {
         }
         getImages(responseFun, errorFunc);
     }, []);
+
+    // Is reset chane
+    // useEffect(() => {
+    //     if (gameNum != curGameNum) {
+    //         let p = new Promise(function(resolve, reject) {
+    //             closeAllCard();
+    //             resolve(true);   
+    //         });
+    //         p.then(function() {
+    //                 opened1Ref.current = opened1Ref.current = '';
+    //                 cardsRef.current = [];
+    //         });
+    //     }
+    // }, [gameNum, curGameNum])
 
     return (     
         <table className="GameUITable">

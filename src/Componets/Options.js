@@ -4,13 +4,19 @@ import { gamerContext } from '../context/Gamer';
 
 export default function Options(props) {
 
-    const { challenge, setChallenge, cate, setCate } = useContext(gamerContext);
+    const { challenge, setChallenge, 
+            cate, setCate, 
+            isReset, setIsReset } = useContext(gamerContext);
     
     const handleChallengeChanged = (e) => {
         setChallenge(e.target.value);
     }
     const handleCateChanged = (e) => {
         setCate(e.target.value);
+    }
+    const handleResetClick = () => {
+        let newIsReset = !isReset;
+        setIsReset(newIsReset);
     }
 
     return (
@@ -32,7 +38,7 @@ export default function Options(props) {
                         <option value="lama">Lama</option>
                     </Form.Control>
                 </Form.Group>
-                <Button size="lg">Reset</Button>            
+                <Button size="lg" onClick={() => handleResetClick()}>Reset</Button>            
             </Form>
         </div>
     )

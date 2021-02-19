@@ -12,6 +12,8 @@ export const GamerProvider = ({ children }) => {
 
     const [score, setScore] = useState(0);
 
+    const [gameNum, setGameNum] = useState(1);
+
     const getImages = (responseFun, errorFunc) => {
 
         responseFun(data);
@@ -29,7 +31,8 @@ export const GamerProvider = ({ children }) => {
             value={{ getImages, 
             challenge, setChallenge,
             cate, setCate,
-            score, setScore }}>
+            score, setScore,
+            gameNum, setGameNum }}>
             {children}
         </gamerContext.Provider>
     );
