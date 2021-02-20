@@ -3,6 +3,7 @@ import { gamerContext } from '../context/Gamer';
 import { Table } from 'react-bootstrap';
 
 import '../assets/css/GameUI.scss';
+import Loader from './Loader';
 
 export default function GameUI() {    
     
@@ -26,6 +27,8 @@ export default function GameUI() {
     const [curChallenge, setCurChallenge] = useState('6');
 
     const [errorMessage, setErrorMessage] = useState('');
+
+    const [isLoading, setIsLoading] = useState(false);
 
     const openCard = ( index ) => {
         cardsRef.current[index].className = 'flip-card opened';
@@ -79,12 +82,17 @@ export default function GameUI() {
     }
 
     const loadImages = () => {
+        setIsLoading(true);
         const responseFun = (response) => {
+            setIsLoading(false);
             setImagesList(response.data);
         }
         const errorFunc = (err) => {
-             if (err.message.includes('403')) {
+            setIsLoading(false);
+            if (err.message.includes('403')) {
                 setErrorMessage(`Wow! We are getting popular. Too many requests this time. Please wait ☕ ...`);
+            } else {
+                setErrorMessage(`Something went wrong. Please try again ...`);
             }
         }
         getImages(responseFun, errorFunc);
@@ -158,7 +166,8 @@ export default function GameUI() {
     // Category or Challenge Change
     useEffect(() => {
         if ( curCate != cate || curChallenge != challenge ) {
-            loadImages();
+            setImagesUI(null);
+            loadImages();            
             setCurCate(cate);
             setCurChallenge(challenge);
         }
@@ -177,12 +186,13 @@ export default function GameUI() {
     }, []);
 
     return (     
-        <div>
+        <div> 
+            <Loader isLoading={isLoading} />              
             <Table className="GameUITable">
                 <tbody>
                     {imagesUI}              
                 </tbody>            
-            </Table>
+            </Table> 
             <div className="errorMessage">{errorMessage}</div>
             <div ref={winUIRef} className="win">
                 <p className="tracking-in-expand-fwd">🎉 <br />

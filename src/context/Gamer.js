@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import configs from '../config.json';
-import data6 from '../data6.json';
-import data9 from '../data9.json';
-import data12 from '../data12.json';
+// import data6 from '../data6.json';
+// import data9 from '../data9.json';
+// import data12 from '../data12.json';
 
 export const gamerContext = React.createContext();
 
