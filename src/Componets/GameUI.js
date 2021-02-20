@@ -11,7 +11,6 @@ export default function GameUI() {
             gameNum, setGameNum } = useContext(gamerContext);
 
     const [imagesList, setImagesList] = useState(null);
-    const [addedImagesList, setAddedImagesList] = useState(null);
 
     const [imagesUI, setImagesUI] = useState(null);
     const cardsRef = useRef([]);
@@ -21,7 +20,9 @@ export default function GameUI() {
 
     const [curGameNum, setCurGameNum] = useState(1);
 
-    // Open a card
+    const [curCate, setCurCate] = useState('cat');
+    const [curChallenge, setCurChallenge] = useState('6');
+
     const openCard = ( index ) => {
         cardsRef.current[index].className = 'flip-card opened';
     }
@@ -69,17 +70,13 @@ export default function GameUI() {
     }
 
     const loadImages = () => {
-        return new Promise ( (resolve, reject) => {
-            const responseFun = (response) => {
-                setImagesList(response);
-                //setImagesList(response.data);
-            }
-            const errorFunc = (respone) => {
-                console.log(respone);
-            }
-            getImages(responseFun, errorFunc);
-            resolve(true);
-        });
+        const responseFun = (response) => {
+            setImagesList(response.data);
+        }
+        const errorFunc = (respone) => {
+            console.log(respone);
+        }
+        getImages(responseFun, errorFunc);
     }
 
     async function resetGame() { 
@@ -89,7 +86,6 @@ export default function GameUI() {
             opened1Ref.current = opened2Ref.current = '';
             cardsRef.current = [];
             setImagesList(null);
-            setAddedImagesList(null)
             setImagesUI(null);
             resolve();
         });
@@ -103,20 +99,15 @@ export default function GameUI() {
     };
 
     // Image List Change
-    useEffect(() => {
+    useEffect(() => {    
         if (imagesList != null) {
-
+            // Picking one images
             let ranPick = getRndInteger(0, imagesList.length-1);
-            //console.log('ranPick', ranPick);
 
-            // Random add
+            // Random position to add dupliced image
             let ranAdd = getRndInteger(0, challenge);
-            //console.log('ranAdd', ranAdd);
-
             let newImgList = [...imagesList];
             newImgList.splice(ranAdd, 0, imagesList[ranPick]);
-            setAddedImagesList(newImgList);
-            //console.log('new', newImgList);
 
             // Generate images into cards
             var cards;            
@@ -132,9 +123,14 @@ export default function GameUI() {
                             </div>
                         </div>
             });
+
             // Output in table
             let rows = 3;
-            let cols = Math.floor(newImgList.length / rows);
+            let cols = Math.floor( newImgList.length / rows );
+            if ( newImgList.length > 9 ) {
+                cols = 3;
+                rows = Math.floor(newImgList.length / cols);
+            }
             let index = 0;
             let tr = [];
             for (var i = 0; i < rows; i++) {
@@ -151,14 +147,13 @@ export default function GameUI() {
 
     // Cate, Challenge Change
     useEffect(() => {
-        console.log('cate', cate, challenge);
-
-    }, [cate, challenge])
-
-    // First time loader
-    useEffect(() => {
-        loadImages();
-    }, []);
+        if ( curCate != cate || curChallenge != challenge ) {
+            console.log(`changed cate=${cate} or challege=${challenge}`);
+            loadImages();
+            setCurCate(cate);
+            setCurChallenge(challenge);
+        }
+    }, [cate, curCate, challenge, curChallenge])
 
     // Reset change
     useEffect(() => {
@@ -166,7 +161,12 @@ export default function GameUI() {
         if (gameNum > curGameNum) { // Game reseted
             resetGame();
         }
-    }, [gameNum, curGameNum])
+    }, [gameNum, curGameNum]);
+
+    // First time loader
+    useEffect(() => {
+        loadImages();
+    }, []);
 
     return (     
         <table className="GameUITable">
