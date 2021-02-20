@@ -1,6 +1,8 @@
 import React, { useContext } from 'react'
-import { Form , Button} from 'react-bootstrap';
+import { Form , Button, Row, Col, Accordion, Card } from 'react-bootstrap';
 import { gamerContext } from '../context/Gamer';
+
+import '../assets/css/Options.scss';
 
 export default function Options(props) {
 
@@ -20,26 +22,45 @@ export default function Options(props) {
     }
 
     return (
-        <div>
-            <Form>
-                <Form.Group controlId="optionsForm.SelectChallenge">
-                    <Form.Label>Challenges</Form.Label>
-                    <Form.Control as="select" custom size="lg" onChange={handleChallengeChanged}>
-                        <option value='6'>6 items</option>
-                        <option value='9'>9 items</option>
-                        <option value='12'>12 itmes</option>
-                    </Form.Control>
-                </Form.Group>
-                <Form.Group controlId="optionsForm.SelectPicCategory">
-                    <Form.Label>Images Category</Form.Label>
-                    <Form.Control as="select" custom size="lg" onChange={handleCateChanged}>
-                        <option value="cat">Cat</option>
-                        <option value="dog">Dog</option>
-                        <option value="lama">Lama</option>
-                    </Form.Control>
-                </Form.Group>
-                <Button size="lg" onClick={() => handleResetClick()}>Reset</Button>            
-            </Form>
-        </div>
+        <Accordion className="optionsAccordin">
+            <Card>
+                <Card.Header>
+                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                        <div class="optionsBtn">OPTIONS</div>
+                    </Accordion.Toggle>
+                </Card.Header>
+                <Accordion.Collapse eventKey="0">
+                    <Card.Body>
+                        <Form className="optionsUI">
+                            <Row>
+                                <Col>
+                                    <Button size="lg" block onClick={() => handleResetClick()}>Reset</Button>            
+                                </Col>
+                                <Col>
+                                    <Form.Group controlId="optionsForm.SelectChallenge">
+                                        <Form.Control as="select" custom size="lg" onChange={handleChallengeChanged}>
+                                            <option value='6'>Numbers</option>
+                                            <option value='6'>6 items</option>
+                                            <option value='9'>9 items</option>
+                                            <option value='12'>12 itmes</option>
+                                        </Form.Control>
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Group controlId="optionsForm.SelectPicCategory">
+                                        <Form.Control as="select" custom size="lg" onChange={handleCateChanged}>
+                                            <option value="">Image Category</option>
+                                            <option value="cat">Cat</option>
+                                            <option value="dog">Dog</option>
+                                            <option value="lasma">Lama</option>
+                                        </Form.Control>
+                                    </Form.Group>
+                                </Col>
+                            </Row>            
+                        </Form>
+                    </Card.Body>
+                </Accordion.Collapse>
+            </Card>
+        </Accordion>
     )
 }

@@ -1,0 +1,37 @@
+@import './_colors.scss';
+
+.navbar {
+    background-color: $orange;
+    color: $purple;
+    .navbar-brand {
+        img {
+            width: 200px;
+        }
+    }
+    .score {
+        font-size: 30px;
+        display: flex;
+        div {
+            padding: 10px;
+        }
+        .scorenum {
+            font-size: 35px;
+            background-color: $mal;
+            color: #000;
+            margin-left: 20px;
+        }
+    }
+    @media (max-width: 576px) {
+        .navbar-brand {
+            img {
+                width: 100px;
+            }
+        }
+        .score {
+            font-size: 20px;
+            .scorenum {
+                font-size: 25px;
+            }
+        }
+    }
+}

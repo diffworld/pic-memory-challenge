@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import { GamerProvider } from './context/Gamer';
 
 import Header from './Componets/Header';
@@ -13,10 +13,10 @@ function App() {
         < Header />
         <Container>
           <Row>
-            <Col sm={3}>
-              <Options />
+            <Col lg={12} xl={12}>
+                <Options />
             </Col>
-            <Col sm={9}>
+            <Col lg={12} xl={12}>
               <GameUI />
             </Col>
           </Row>

@@ -1,17 +1,24 @@
 import React, { useContext } from 'react'
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Navbar, Container, Image } from 'react-bootstrap';
 import { gamerContext } from '../context/Gamer';
+
+import '../assets/css/Header.scss';
 
 export default function Header() {
 
-    const { score } = useContext(gamerContext);
+    const { score, gameNum } = useContext(gamerContext);
 
     return (
-        <Navbar bg="light" expand="lg">
+        <Navbar expand="lg">
             <Container className="justify-content-between">
-                <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
-                <div>
-                    SCORE: {(!score) ? '0' : score}
+                <Navbar.Brand>
+                    <Image src="/logo.png" />
+                </Navbar.Brand>
+                <div className="score">
+                    <div>SCORE</div>
+                    <div className="scorenum">
+                        {(!score) ? '0' : score} / {gameNum}
+                    </div>
                 </div>
             </Container>
         </Navbar>

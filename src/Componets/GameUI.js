@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState, useRef } from 'react'
 import { gamerContext } from '../context/Gamer';
-import { Image } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 
 import '../assets/css/GameUI.scss';
 
@@ -36,10 +36,12 @@ export default function GameUI() {
             openCard(index);
             opened1Ref.current = index;
         } else {
-            if (opened2Ref.current === '' ) {
+            if (opened2Ref.current === '' && opened1Ref.current != index) {
                 openCard(index);
                 opened2Ref.current = index;
-                validateCards();
+                setTimeout(() => {
+                    validateCards();
+                }, 1000);                
             }
         }
     }
@@ -109,28 +111,27 @@ export default function GameUI() {
             let newImgList = [...imagesList];
             newImgList.splice(ranAdd, 0, imagesList[ranPick]);
 
+            // Smiley set
+            const smileySet = ['😺', '💩', '😰 ', '🥳', '🤫', '🤓', '👑', '🧑🏻‍🦱', '🥷🏽' , '🦉', '🦐', '🍄'];
+
             // Generate images into cards
             var cards;            
             cards = newImgList.map( (img, index) => {
                 return <div id={`card-${img.id}`}
-                            className='flip-card'
+                            className='flip-card text-center'
                             onClick={(event, id, cardIndex) => handleClickCards(event, img.id, index) }
                             ref={ref => { cardsRef.current[index] = ref}}>
                             <div className="flip-card-inner">
-                                <div className="flip-card-front"></div>
+                                <div className={`flip-card-front`}>{smileySet[getRndInteger(0, smileySet.length-1)]}</div>
                                 <div className="flip-card-back" style={{ backgroundImage: `url('${img.urls.small}')` }}>                  
                                 </div>
                             </div>
                         </div>
             });
 
-            // Output in table
-            let rows = 3;
-            let cols = Math.floor( newImgList.length / rows );
-            if ( newImgList.length > 9 ) {
-                cols = 3;
-                rows = Math.floor(newImgList.length / cols);
-            }
+            // Output in table            
+            let cols = 2;
+            let rows = Math.floor(newImgList.length / cols);
             let index = 0;
             let tr = [];
             for (var i = 0; i < rows; i++) {
@@ -145,7 +146,7 @@ export default function GameUI() {
         }
     }, [imagesList]);
 
-    // Cate, Challenge Change
+    // Category or Challenge Change
     useEffect(() => {
         if ( curCate != cate || curChallenge != challenge ) {
             console.log(`changed cate=${cate} or challege=${challenge}`);
@@ -155,7 +156,7 @@ export default function GameUI() {
         }
     }, [cate, curCate, challenge, curChallenge])
 
-    // Reset change
+    // Reset
     useEffect(() => {
         console.log('game num', gameNum, curGameNum);
         if (gameNum > curGameNum) { // Game reseted
@@ -169,10 +170,10 @@ export default function GameUI() {
     }, []);
 
     return (     
-        <table className="GameUITable">
+        <Table className="GameUITable">
             <tbody>
                 {imagesUI}                
             </tbody>            
-        </table>
+        </Table>
     )
 }
