@@ -26,7 +26,7 @@ export default function Options(props) {
             <Card>
                 <Card.Header>
                     <Accordion.Toggle as={Card.Header} eventKey="0">
-                        <div class="optionsBtn">OPTIONS</div>
+                        <div className="optionsBtn">OPTIONS</div>
                     </Accordion.Toggle>
                 </Card.Header>
                 <Accordion.Collapse eventKey="0">
@@ -52,7 +52,6 @@ export default function Options(props) {
                                             <option value="">Image Category</option>
                                             <option value="cat">Cat</option>
                                             <option value="dog">Dog</option>
-                                            <option value="lasma">Lama</option>
                                         </Form.Control>
                                     </Form.Group>
                                 </Col>

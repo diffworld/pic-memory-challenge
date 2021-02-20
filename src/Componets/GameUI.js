@@ -25,6 +25,8 @@ export default function GameUI() {
     const [curCate, setCurCate] = useState('cat');
     const [curChallenge, setCurChallenge] = useState('6');
 
+    const [errorMessage, setErrorMessage] = useState('');
+
     const openCard = ( index ) => {
         cardsRef.current[index].className = 'flip-card opened';
     }
@@ -80,8 +82,10 @@ export default function GameUI() {
         const responseFun = (response) => {
             setImagesList(response.data);
         }
-        const errorFunc = (respone) => {
-            console.log(respone);
+        const errorFunc = (err) => {
+             if (err.message.includes('403')) {
+                setErrorMessage(`Wow! We are getting popular. Too many requests this time. Please wait ☕ ...`);
+            }
         }
         getImages(responseFun, errorFunc);
     }
@@ -117,7 +121,7 @@ export default function GameUI() {
             newImgList.splice(ranAdd, 0, imagesList[ranPick]);
 
             // Smiley set
-            const smileySet = ['😺', '💩', '😰 ', '🥳', '🤫', '🤓', '👑', '🧑🏻‍🦱', '🥷🏽' , '🦉', '🦐', '🍄'];
+            const smileySet = ['😺', '🤯', '😰 ', '🥳', '🤫', '😟', '🤪 ', '🤬', '😌' , '😈', '😴', '🤖'];
 
             // Generate images into cards
             var cards;            
@@ -181,6 +185,7 @@ export default function GameUI() {
                     {imagesUI}              
                 </tbody>            
             </Table>
+            <div className="errorMessage">{errorMessage}</div>
             <div ref={winUIRef} className="win">
                 <p className="tracking-in-expand-fwd">🎉 <br />
                     Great Jobs! <br /> </p>
