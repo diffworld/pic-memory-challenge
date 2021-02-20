@@ -1,0 +1,17 @@
+@import './_colors.scss';
+
+.optionsUI {
+    margin: 8px 0;
+    select {
+        background-color: transparent;
+        border: 3px solid $mal;
+        color: $mal;
+    }
+    .form-group {
+        margin-bottom: 0;
+    }
+    button {
+        color: $purple;
+        background-color: $mal;
+    }
+}

@@ -1,24 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import { GamerProvider } from './context/Gamer';
+
+import Header from './Componets/Header';
+import { Container, Row, Col } from 'react-bootstrap';
+import Options from './Componets/Options';
+import GameUI from './Componets/GameUI';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <GamerProvider>
+      <div className="App">
+        < Header />
+        <Container>
+          <Row>
+            <Col lg={12} xl={12}>
+                <Options />
+            </Col>
+            <Col lg={12} xl={12}>
+              <GameUI />
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    </GamerProvider>
   );
 }
 

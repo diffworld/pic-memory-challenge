@@ -1,0 +1,6 @@
+{
+    "IMAGE_API_ENDPOINT": "https://api.unsplash.com/photos/random",
+    "IMAGE_API_KEY": "iBIlE282IjBgszXo_ffYb-BXdjzY31NQVAmELCADaNw",
+    "LOAD_PER_PAGE": 6,
+    "PAGE_TITLE": "Image Memory Challege Game!"
+}
