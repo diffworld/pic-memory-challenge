@@ -1,7 +1,7 @@
 @import './_colors.scss';
 
 .optionsAccordin {
-    margin: 10px 0;
+    margin: 5px 0;
     .card {
         background-color: transparent;
         border: 0;
@@ -14,8 +14,9 @@
                 color: $mal;
                 width: 100%;
                 border: 1px solid $mal;
+                padding: 3px;
                 border-radius: 5px;
-                font-size: 25px;
+                font-size: 20px;
             }
         }
     }    

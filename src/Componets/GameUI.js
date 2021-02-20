@@ -18,6 +18,8 @@ export default function GameUI() {
     const opened1Ref = useRef('');
     const opened2Ref = useRef('');
 
+    const winUIRef = useRef('');
+
     const [curGameNum, setCurGameNum] = useState(1);
 
     const [curCate, setCurCate] = useState('cat');
@@ -51,10 +53,13 @@ export default function GameUI() {
         let card2Id = cardsRef.current[opened2Ref.current].id;
 
         if (card1Id === card2Id) { // WIN
-            let newScrore = parseInt(score);
-            setScore(newScrore + 1);
-            resetGame();
-            alert('WIN');
+            winUIRef.current.className = 'win show';
+            setTimeout( () => {
+                let newScrore = parseInt(score);
+                setScore(newScrore + 1);
+                resetGame();
+                winUIRef.current.className = 'win';
+            }, 3000);
         } else {
             opened1Ref.current = '';
             opened2Ref.current = '';
@@ -170,10 +175,16 @@ export default function GameUI() {
     }, []);
 
     return (     
-        <Table className="GameUITable">
-            <tbody>
-                {imagesUI}                
-            </tbody>            
-        </Table>
+        <div>
+            <Table className="GameUITable">
+                <tbody>
+                    {imagesUI}              
+                </tbody>            
+            </Table>
+            <div ref={winUIRef} className="win">
+                <p className="tracking-in-expand-fwd">🎉 <br />
+                    Great Jobs! <br /> </p>
+            </div>
+        </div>
     )
 }

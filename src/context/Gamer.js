@@ -17,14 +17,13 @@ export const GamerProvider = ({ children }) => {
     const [gameNum, setGameNum] = useState(1);
 
     const getImages = (responseFun, errorFunc) => {
-        if (challenge === '6')
-            responseFun(data6);
-        else if (challenge === '9')
-            responseFun(data9);
-        else if (challenge === '12')
-            responseFun(data12);
-        return;   
-
+        // if (challenge === '6')
+        //     responseFun(data6);
+        // else if (challenge === '9')
+        //     responseFun(data9);
+        // else if (challenge === '12')
+        //     responseFun(data12);
+        // return;   
         let qs = `query=${cate}&orientation=landscape&count=${challenge-1}`;     
         const url = `${configs.IMAGE_API_ENDPOINT}?${qs}&client_id=${configs.IMAGE_API_KEY}`
         axios.get(url)
