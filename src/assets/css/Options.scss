@@ -1,31 +1,14 @@
 @import './_colors.scss';
 
-.optionsAccordin {
-    margin: 5px 0;
-    .card {
-        background-color: transparent;
-        border: 0;
-        .card-header {
-            padding: 3px;
-            background-color: transparent;
-            border: 0;
-            text-align: center;
-            .optionsBtn {
-                color: $mal;
-                width: 100%;
-                border: 1px solid $mal;
-                padding: 3px;
-                border-radius: 5px;
-                font-size: 20px;
-            }
-        }
-    }    
-}
 .optionsUI {
+    margin: 8px 0;
     select {
         background-color: transparent;
         border: 3px solid $mal;
         color: $mal;
+    }
+    .form-group {
+        margin-bottom: 0;
     }
     button {
         color: $purple;

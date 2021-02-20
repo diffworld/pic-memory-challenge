@@ -18,7 +18,6 @@ export default function Header() {
                     <div>SCORE</div>
                     <div className="scorenum">
                         {(!score) ? '0' : score}
-                        {/* {(!score) ? '0' : score} / {gameNum} */}
                     </div>
                 </div>
             </Container>

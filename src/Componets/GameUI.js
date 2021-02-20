@@ -158,7 +158,6 @@ export default function GameUI() {
     // Category or Challenge Change
     useEffect(() => {
         if ( curCate != cate || curChallenge != challenge ) {
-            console.log(`changed cate=${cate} or challege=${challenge}`);
             loadImages();
             setCurCate(cate);
             setCurChallenge(challenge);
@@ -167,7 +166,6 @@ export default function GameUI() {
 
     // Reset
     useEffect(() => {
-        console.log('game num', gameNum, curGameNum);
         if (gameNum > curGameNum) { // Game reseted
             resetGame();
         }
