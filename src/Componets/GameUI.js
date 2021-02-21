@@ -149,12 +149,16 @@ export default function GameUI() {
             // Output in table            
             let cols = 2;
             let rows = Math.floor(newImgList.length / cols);
+            if (challenge === '12') {
+                cols = 3;
+                rows = Math.floor(newImgList.length / cols);
+            }
             let index = 0;
             let tr = [];
             for (var i = 0; i < rows; i++) {
                 var td = [];
                 for (let j = 0; j < cols; j++) {
-                    td.push(<td key={`${i}-${j}`}>{cards[index]}</td>);
+                    td.push(<td key={`${i}-${j}`} className={(challenge === '12') ? 'cols3': ''}>{cards[index]}</td>);
                     index++;
                 }
                 tr.push(<tr key={i}>{td}</tr>);
