@@ -21,18 +21,38 @@
     <meta property="og:url" content="https://flipper-game.web.app/">
     <meta property="og:title" content="Fllipper!! - Let's match the photos">
     <meta property="og:description" content="Find the match pictures">
-    <meta property="og:image" content="%PUBLIC_URL%/preview.png">
+    <meta property="og:image" content="https://flipper-game.web.app/preview.png">
 
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://flipper-game.web.app/">
     <meta property="twitter:title" content="Fllipper!! - Let's match the photos">
     <meta property="twitter:description" content="Find the match pictures">
-    <meta property="twitter:image" content="%PUBLIC_URL%/preview.png">
+    <meta property="twitter:image" content="https://flipper-game.web.app/preview.png">
 
     <title>Fllipper!!</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+
+    <!-- Analytics on Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-analytics.js"></script>
+
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyDRTVnexoTutzAWDmD6e7mFpuv_UYaH1ak",
+        authDomain: "flipper-game.firebaseapp.com",
+        projectId: "flipper-game",
+        storageBucket: "flipper-game.appspot.com",
+        messagingSenderId: "667511549351",
+        appId: "1:667511549351:web:982e09093483bb0c7b5a82",
+        measurementId: "G-CSWMEN0MX6"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+    </script>
+
   </body>
 </html>
