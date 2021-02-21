@@ -29,7 +29,7 @@ export default function Options(props) {
                         <Form.Control as="select" custom size="lg" onChange={handleChallengeChanged}>
                             <option value='6'>Numbers</option>
                             <option value='6'>6 items</option>
-                            <option value='9'>9 items</option>
+                            <option value='8'>8 items</option>
                             <option value='12'>12 itmes</option>
                         </Form.Control>
                     </Form.Group>

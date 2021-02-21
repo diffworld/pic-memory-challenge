@@ -14,7 +14,7 @@
     }
     td:first-child {
         margin-right: 0;
-    }
+    }    
 
     .flip-card {
         background-color: transparent;
@@ -60,6 +60,24 @@
     .flip-card-back {
         transform: rotateY(180deg);
         background-size: 100% 100%;
+    }
+
+    td.cols3 {
+        .flip-card {
+            width: 150px;
+            height: 100px; 
+            @media (max-width: 576px) {
+                width: 100px;
+                height: 100px;
+            }
+        }
+        .flip-card-back {
+            @media (max-width: 576px) {
+                background-size: 150% auto;
+                background-position: center center;
+                background-repeat: no-repeat;
+            }
+        }
     }
 
 
