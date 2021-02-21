@@ -88,10 +88,22 @@
         }
     }
 
-    @media (max-width: 400px) {
+    @media (max-width: 450px) {
         .flip-card {
             width: 150px;
             height: 100px;
+        }
+    }
+
+    @media (max-width: 350px) {
+        .flip-card {
+            width: 100px;
+            height: 100px;
+        }
+        .flip-card-back {
+            background-size: 150% auto;
+            background-position: center center;
+            background-repeat: no-repeat;
         }
     }
 }
